@@ -55,10 +55,19 @@ pub fn fragment_shader(fragment: &Fragment, uniforms: &Uniforms, time: u32) -> (
       7 => jungle_earth_shader(fragment, uniforms, time),      // Dense jungle world
       4 => volcanic_earth_shader(fragment, uniforms, time),    // Volcanic active Earth
       6 => ancient_earth_shader(fragment, uniforms, time),     // Primordial Earth
+      8 => spaceship_shader(fragment, uniforms, time),
       _ => (Color::new(0, 0, 0), 0),
   }
 }
 
+fn spaceship_shader(fragment: &Fragment, uniforms: &Uniforms, time: u32) -> (Color, u32) {
+    let base_color = Color::from_float(0.2, 0.2, 0.7);  // Blue-ish
+    let light_dir = normalize(&Vec3::new(1.0, 1.0, 1.0));
+    let normal = normalize(&fragment.normal);
+    let diffuse = dot(&normal, &light_dir).max(0.0);
+    let metallic_effect = ((fragment.vertex_position.x * 10.0 + time as f32 * 0.1).sin() * 0.1 + 0.9);
+    (base_color * (0.2 + 0.8 * diffuse * metallic_effect), 0)
+}
 fn tropical_earth_shader(fragment: &Fragment, uniforms: &Uniforms, time: u32) -> (Color, u32) {
   let noise_value = uniforms.noise.get_noise_2d(
       fragment.vertex_position.x,
