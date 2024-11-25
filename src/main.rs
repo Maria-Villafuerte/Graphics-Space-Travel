@@ -455,7 +455,7 @@ fn main() {
         uniforms.current_shader = 8; // Shader específico para la nave
         uniforms.model_matrix = create_model_matrix(
             solar_system.spaceship_position,
-            0.2, // Escala de la nave
+            0.02, // Escala de la nave
             solar_system.spaceship_rotation
         );
         render(&mut framebuffer, &uniforms, &spaceship_vertex_array, time as u32);
