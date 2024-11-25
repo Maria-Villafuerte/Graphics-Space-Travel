@@ -28,7 +28,9 @@ pub struct SolarSystem {
 impl SolarSystem {
     pub fn new() -> Self {
         let mut bodies = Vec::new();
+        let orbit_point_count = 72;
         
+    
         // Sol (centro del sistema) con mayor escala y emisión
         bodies.push(CelestialBody {
             position: Vec3::new(0.0, 0.0, 0.0),
@@ -71,6 +73,16 @@ impl SolarSystem {
                 orbit_points,
                 collision_radius: scale * collision_scale,
             });
+        }
+
+        for (orbital_radius, orbital_speed, scale, shader_id, collision_scale) in planet_configs.iter() {
+            let mut orbit_points = Vec::with_capacity(orbit_point_count);
+            for i in 0..orbit_point_count {
+                let angle = (i as f32 * 2.0 * PI) / orbit_point_count as f32;
+                let x = orbital_radius * angle.cos();
+                let z = orbital_radius * angle.sin();
+                orbit_points.push(Vec3::new(x, 0.0, z));
+            }
         }
 
         SolarSystem {

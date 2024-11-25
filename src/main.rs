@@ -318,14 +318,16 @@ fn world_to_screen(point: Vec3, uniforms: &Uniforms) -> Vec3 {
 }
 
 fn main() {
+    let mut last_bloom_update = 0;
+    let bloom_update_interval = 5;
     let system_radius = 20.0;
     let camera_distance = system_radius * 2.5;
     let camera_height = system_radius * 1.0;
     
     let window_width = 680;
     let window_height = 800;
-    let framebuffer_width = 1080;
-    let framebuffer_height = 500;
+    let framebuffer_width = window_width; 
+    let framebuffer_height = window_height;
 
     let mut framebuffer = Framebuffer::new(framebuffer_width, framebuffer_height);
     let mut window = Window::new(
@@ -354,7 +356,6 @@ fn main() {
     let spaceship = Obj::load("assets/models/Navesita.obj").expect("Failed to load spaceship");
 
     let vertex_arrays = obj.get_vertex_array(); 
-    let moon_vertex_array = moon.get_vertex_array();
     let ring_vertex_array = ring_obj.get_vertex_array();
     let spaceship_vertex_array = spaceship.get_vertex_array();
 
@@ -405,6 +406,11 @@ fn main() {
         // Manejar scroll del mouse
         if let Some(scroll) = window.get_scroll_wheel() {
             camera.handle_mouse_scroll(scroll.1 * 0.1);
+        }
+        if uniforms.current_shader == 7 && time - last_bloom_update >= bloom_update_interval {
+            gaussian_blur(&mut framebuffer.emissive_buffer, framebuffer.width, framebuffer.height, 10, 2.0); // Reduced kernel size
+            apply_bloom(&mut framebuffer.buffer, &framebuffer.emissive_buffer, framebuffer.width, framebuffer.height);
+            last_bloom_update = time;
         }
 
         framebuffer.clear();
