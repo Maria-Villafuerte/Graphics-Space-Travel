@@ -94,7 +94,7 @@ cargo run
 Una simulación interactiva 3D del sistema solar construida en Rust con implementación de renderizado por software.
 
 ## Video Demo 
-[![Video Demostrativo](miniatura.png){width=20 height=10}](https://youtu.be/AAXXX63LwSw)
+[![Video Demostrativo](miniatura.png)](https://youtu.be/u-uhgye86TM)
 
 
 ## Evaluación de Puntos Implementados
@@ -152,15 +152,3 @@ Una simulación interactiva 3D del sistema solar construida en Rust con implemen
 - **Puntos Implementados**: 170 puntos
   - Criterios Subjetivos: 70 puntos
   - Criterios Objetivos: 100 puntos
-- **Puntos No Implementados**: 20 puntos
-  - Skybox con estrellas: 10 puntos
-  - Mapa normal en planetas: 10 puntos
-
-## Características Destacadas
-El proyecto destaca especialmente en:
-- Implementación robusta de shaders planetarios
-- Sistema de movimiento y control fluido
-- Manejo eficiente de la renderización
-- Interactividad y respuesta del usuario
-- Sistema de colisiones funcional
-- Efectos visuales avanzados
